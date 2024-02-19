@@ -177,7 +177,8 @@ class Board:
         cfg.ap_common_checks()
 
         cfg.env.prepend_value('INCLUDES', [
-            cfg.srcnode.find_dir('libraries/AP_Common/missing').abspath()
+            cfg.srcnode.find_dir('libraries/AP_Common/missing').abspath(),
+			"/home/arslan/projects/ardupilot/ardupilot/install/include/c++/v1/"
         ])
         if os.path.exists(os.path.join(env.SRCROOT, '.vscode/c_cpp_properties.json')):
             # change c_cpp_properties.json configure the VSCode Intellisense env
@@ -1079,7 +1080,7 @@ class chibios(Board):
             '-fno-builtin-vprintf',
             '-fno-builtin-vfprintf',
             '-fno-builtin-puts',
-            '-mno-thumb-interwork',
+#'-mno-thumb-interwork',
             '-mthumb',
             '--specs=nano.specs',
             '--specs=nosys.specs',
@@ -1123,7 +1124,7 @@ class chibios(Board):
             '-uchThdExit',
             '-fno-common',
             '-nostartfiles',
-            '-mno-thumb-interwork',
+#'-mno-thumb-interwork',
             '-mthumb',
             '--specs=nano.specs',
             '--specs=nosys.specs',

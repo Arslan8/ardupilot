@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include <type_traits>
+#include <type_traits.h>
 
 #define FUNCTOR_TYPEDEF(name, rettype, ...) \
     typedef Functor<rettype, ## __VA_ARGS__> name

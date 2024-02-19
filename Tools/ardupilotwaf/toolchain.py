@@ -133,6 +133,7 @@ def configure(cfg):
     _filter_supported_cxx_compilers('g++', 'clang++')
 
     cfg.msg('Using toolchain', cfg.env.TOOLCHAIN)
+    cfg.msg('Using flags', cfg.__dict__)
 
     if cfg.env.TOOLCHAIN == 'native':
         cfg.load('compiler_cxx compiler_c')
