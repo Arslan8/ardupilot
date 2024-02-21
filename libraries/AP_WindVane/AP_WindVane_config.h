@@ -6,7 +6,7 @@
 #include <AP_RPM/AP_RPM_config.h>
 
 #ifndef AP_WINDVANE_ENABLED
-#define AP_WINDVANE_ENABLED 1
+#define AP_WINDVANE_ENABLED 0
 #endif
 
 #ifndef AP_WINDVANE_BACKEND_DEFAULT_ENABLED

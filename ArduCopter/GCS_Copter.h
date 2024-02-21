@@ -3,6 +3,7 @@
 #include <GCS_MAVLink/GCS.h>
 #include "GCS_Mavlink.h"
 
+#if HAL_GCS_ENABLED
 class GCS_Copter : public GCS
 {
     friend class Copter; // for access to _chan in parameter declarations
@@ -47,3 +48,4 @@ protected:
     }
 
 };
+#endif 

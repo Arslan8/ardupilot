@@ -390,7 +390,9 @@ private:
 
     // manual forward throttle input
     AP_Float fwd_thr_max;
+#if AP_RC_CHANNEL_ENABLED
     RC_Channel *rc_fwd_thr_ch;
+#endif 
 
     // QACRO mode max roll/pitch/yaw rates
     AP_Float acro_roll_rate;

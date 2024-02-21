@@ -1364,6 +1364,28 @@ void can_printf(const char *fmt, ...);
 #define GCS_SEND_TEXT(severity, format, args...)
 #define GCS_SEND_MESSAGE(msg)
 #define AP_HAVE_GCS_SEND_TEXT 0
+class GCS
+{
 
+public:
+		void        send_text(MAV_SEVERITY severity, const char *fmt, ...) const FMT_PRINTF(3, 4) {
+				return;
+		}
+};
+GCS &gcs();
 #endif // HAL_GCS_ENABLED
+
+class GCS
+{
+
+public:
+        void        send_text(int severity, const char *fmt, ...) const FMT_PRINTF(3, 4) {
+                return;
+        }
+
+		void        send_message(int id) {
+				return;
+		}
+};
+GCS &gcs();
 

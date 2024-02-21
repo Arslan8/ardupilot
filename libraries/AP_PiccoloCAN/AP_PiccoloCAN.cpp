@@ -21,7 +21,11 @@
 
 #include "AP_PiccoloCAN.h"
 
-#if HAL_PICCOLO_CAN_ENABLE
+//#define HAL_PICCOLO_CAN_ENABLE 0
+#define XSTR(x) STR(x)
+#define STR(x) #x
+#pragma message "The value of ABC: " XSTR(HAL_PICCOLO_CAN_ENABLE)
+#if defined(HAL_PICCOLO_CAN_ENABLE) && HAL_PICCOLO_CAN_ENABLE==1 && HAL_CANMANAGER_ENABLED
 
 #include <AP_Param/AP_Param.h>
 #include <AP_BoardConfig/AP_BoardConfig.h>

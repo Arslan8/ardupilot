@@ -34,7 +34,7 @@ void Copter::ekf_check()
 
     // exit immediately if ekf has no origin yet - this assumes the origin can never become unset
     Location temp_loc;
-    if (!ahrs.get_origin(temp_loc)) {
+    if (!AP::ahrs().get_origin(temp_loc)) {
         return;
     }
 

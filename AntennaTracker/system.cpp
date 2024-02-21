@@ -10,19 +10,23 @@ void Tracker::init_ardupilot()
     AP_Notify::flags.pre_arm_check = true;
     AP_Notify::flags.pre_arm_gps_check = true;
 
+#if AP_BATTERY_ENABLED
     // initialise battery
     battery.init();
+#endif 
 
     // init baro before we start the GCS, so that the CLI baro test works
     barometer.set_log_baro_bit(MASK_LOG_IMU);
     barometer.init();
 
+#if HAL_GCS_ENABLED
     // setup telem slots with serial ports
     gcs().setup_uarts();
     // update_send so that if the first packet we receive happens to
     // be an arm message we don't trigger an internal error when we
     // try to initialise stream rates in the main loop.
     gcs().update_send();
+#endif 
 
     // initialise compass
     AP::compass().set_log_bit(MASK_LOG_COMPASS);
@@ -32,11 +36,14 @@ void Tracker::init_ardupilot()
     gps.set_log_gps_bit(MASK_LOG_GPS);
     gps.init(serial_manager);
 
-    ahrs.init();
-    ahrs.set_fly_forward(false);
+	AP::ahrs().init();
+	AP::ahrs().set_fly_forward(false);
 
+	//TODO:
+#if AP_INERTIALSENSOR_ENABLED
     ins.init(scheduler.get_loop_rate_hz());
-    ahrs.reset();
+#endif 
+	AP::ahrs().reset();
 
     barometer.calibrate();
 
@@ -46,8 +53,10 @@ void Tracker::init_ardupilot()
 #endif
 
     // initialise rc channels including setting mode
+#if AP_RC_CHANNEL_ENABLED
     rc().convert_options(RC_Channel::AUX_FUNC::ARMDISARM_UNUSED, RC_Channel::AUX_FUNC::ARMDISARM);
     rc().init();
+#endif 
 
     // initialise servos
     init_servos();
@@ -120,8 +129,8 @@ bool Tracker::set_home(const Location &temp)
 {
     // check EKF origin has been set
     Location ekf_origin;
-    if (ahrs.get_origin(ekf_origin)) {
-        if (!ahrs.set_home(temp)) {
+    if (AP::ahrs().get_origin(ekf_origin)) {
+        if (!AP::ahrs().set_home(temp)) {
             return false;
         }
     }
@@ -183,9 +192,11 @@ void Tracker::set_mode(Mode &newmode, const ModeReason reason)
 	// log mode change
 	logger.Write_Mode((uint8_t)mode->number(), reason);
 #endif
+#if HAL_GCS_ENABLED
     gcs().send_message(MSG_HEARTBEAT);
+#endif 
 
-    nav_status.bearing = ahrs.yaw_sensor * 0.01f;
+    nav_status.bearing = AP::ahrs().yaw_sensor * 0.01f;
 }
 
 bool Tracker::set_mode(const uint8_t new_mode, const ModeReason reason)

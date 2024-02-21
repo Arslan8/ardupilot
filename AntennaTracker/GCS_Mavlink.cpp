@@ -1,6 +1,7 @@
 #include "GCS_Mavlink.h"
 #include "Tracker.h"
 
+#if HAL_GCS_ENABLED
 MAV_TYPE GCS_Tracker::frame_type() const
 {
     return MAV_TYPE_ANTENNA_TRACKER;
@@ -645,3 +646,5 @@ void GCS_MAVLINK_Tracker::send_global_position_int()
         0,                        // Z speed cm/s (+ve Down)
         tracker.ahrs.yaw_sensor); // compass heading in 1/100 degree
 }
+
+#endif

@@ -2,6 +2,7 @@
 
 #include <RC_Channel/RC_Channel.h>
 
+#if AP_RC_CHANNEL_ENABLED
 class RC_Channel_Tracker : public RC_Channel
 {
 
@@ -34,3 +35,4 @@ protected:
     int8_t flight_mode_channel_number() const override;
 
 };
+#endif 

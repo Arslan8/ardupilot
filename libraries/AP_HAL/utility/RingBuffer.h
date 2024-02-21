@@ -1,6 +1,6 @@
 #pragma once
 
-#include <atomic>
+//#include <atomic>
 #include <stdint.h>
 #include <AP_HAL/AP_HAL_Boards.h>
 #include <AP_HAL/AP_HAL_Macros.h>
@@ -98,8 +98,8 @@ private:
     uint8_t *buf;
     uint32_t size;
 
-    std::atomic<uint32_t> head{0}; // where to read data
-    std::atomic<uint32_t> tail{0}; // where to write data
+    uint32_t head{0}; // where to read data
+    uint32_t tail{0}; // where to write data
 
     bool external_buf;
 };

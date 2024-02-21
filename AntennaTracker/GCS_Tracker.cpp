@@ -1,6 +1,6 @@
 #include "GCS_Tracker.h"
 #include "Tracker.h"
-
+#if HAL_GCS_ENABLED
 uint8_t GCS_Tracker::sysid_this_mav() const
 {
     return tracker.g.sysid_this_mav;
@@ -57,12 +57,13 @@ void GCS_Tracker::update_vehicle_sensor_status_flags()
         MAV_SYS_STATUS_SENSOR_ATTITUDE_STABILIZATION |
         MAV_SYS_STATUS_SENSOR_YAW_POSITION;
 }
+#endif 
 
-#if AP_LTM_TELEM_ENABLED
+#if defined(AP_LTM_TELEM_ENABLED)
 // avoid building/linking LTM:
 void AP_LTM_Telem::init() {};
 #endif
-#if AP_DEVO_TELEM_ENABLED
+#if defined(AP_DEVO_TELEM_ENABLED)
 // avoid building/linking Devo:
 void AP_DEVO_Telem::init() {};
 #endif

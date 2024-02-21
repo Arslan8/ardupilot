@@ -7,7 +7,7 @@
 #ifndef AC_MAVLINK_SOLO_BUTTON_COMMAND_HANDLING_ENABLED
 #define AC_MAVLINK_SOLO_BUTTON_COMMAND_HANDLING_ENABLED 1
 #endif
-
+#if HAL_GCS_ENABLED
 class GCS_MAVLINK_Copter : public GCS_MAVLINK
 {
 
@@ -127,3 +127,4 @@ private:
 #endif
 
 };
+#endif 

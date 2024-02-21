@@ -236,7 +236,7 @@ public:
     void pollErrorFlagsFromISR(void);
 
     // CAN Peripheral register structure
-    static constexpr bxcan::CanType* const Can[HAL_NUM_CAN_IFACES] = { HAL_CAN_BASE_LIST };
+    bxcan::CanType* const Can[HAL_NUM_CAN_IFACES] = { HAL_CAN_BASE_LIST };
 
 protected:
     bool add_to_rx_queue(const CanRxItem &rx_item) override {

@@ -188,7 +188,7 @@ AP_AdvancedFailsafe::check(uint32_t last_valid_rc_ms)
     if (!_enable) {
         return;
     }
-
+#if HAL_GCS_ENABLED
 #if AP_FENCE_ENABLED
     // we always check for fence breach
     if(_enable_geofence_fs) {
@@ -213,7 +213,7 @@ AP_AdvancedFailsafe::check(uint32_t last_valid_rc_ms)
         (mode == AFS_MANUAL || mode == AFS_STABILIZED || !_rc_term_manual_only) &&
         _rc_fail_time_seconds > 0 &&
             (AP_HAL::millis() - last_valid_rc_ms) > (_rc_fail_time_seconds * 1000.0f)) {
-        gcs().send_text(MAV_SEVERITY_CRITICAL, "Terminating due to RC failure");
+        //gcs().send_text(MAV_SEVERITY_CRITICAL, "Terminating due to RC failure");
         _terminate.set_and_notify(1);
     }
     
@@ -339,6 +339,7 @@ AP_AdvancedFailsafe::check(uint32_t last_valid_rc_ms)
         hal.gpio->pinMode(_terminate_pin, HAL_GPIO_OUTPUT);
         hal.gpio->write(_terminate_pin, _terminate?1:0);
     }    
+#endif
 }
 
 
@@ -428,12 +429,15 @@ bool AP_AdvancedFailsafe::should_crash_vehicle(void)
 // returns true if AFS is in the desired termination state
 bool AP_AdvancedFailsafe::gcs_terminate(bool should_terminate, const char *reason) {
     if (!_enable) {
+#if HAL_GCS_ENABLED
         gcs().send_text(MAV_SEVERITY_INFO, "AFS not enabled, can't terminate the vehicle");
+#endif 
         return false;
     }
 
     _terminate.set_and_notify(should_terminate ? 1 : 0);
 
+#if HAL_GCS_ENABLED
     // evaluate if we will crash or not, as AFS must be enabled, and TERM_ACTION has to be correct
     bool is_terminating = should_crash_vehicle();
 
@@ -447,6 +451,7 @@ bool AP_AdvancedFailsafe::gcs_terminate(bool should_terminate, const char *reaso
     } else if (should_terminate && _terminate_action != TERMINATE_ACTION_TERMINATE) {
         gcs().send_text(MAV_SEVERITY_INFO, "Unable to terminate, termination is not configured");
     }
+#endif 
     return false;
 }
 
@@ -482,7 +487,9 @@ void AP_AdvancedFailsafe::max_range_update(void)
     if (distance_km > _max_range_km) {
         uint32_t now = AP_HAL::millis();
         if (now - _term_range_notice_ms > 5000) {
+#if HAL_GCS_ENABLED
             gcs().send_text(MAV_SEVERITY_CRITICAL, "Terminating due to range %.1fkm", distance_km);
+#endif 
             _term_range_notice_ms = now;
         }
         _terminate.set_and_notify(1);

@@ -71,7 +71,7 @@ static const eventmask_t EVT_PARITY = EVENT_MASK(11);
 static const eventmask_t EVT_TRANSMIT_END = EVENT_MASK(12);
 
 // events for dma tx, thread per UART so can be from 0
-static const eventmask_t EVT_TRANSMIT_DMA_START = EVENT_MASK(0);
+//static const eventmask_t EVT_TRANSMIT_DMA_START = EVENT_MASK(0);
 static const eventmask_t EVT_TRANSMIT_DMA_COMPLETE = EVENT_MASK(1);
 static const eventmask_t EVT_TRANSMIT_DATA_READY = EVENT_MASK(2);
 static const eventmask_t EVT_TRANSMIT_UNBUFFERED = EVENT_MASK(3);

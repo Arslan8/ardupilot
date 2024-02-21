@@ -6,8 +6,8 @@ void Copter::update_ground_effect_detector(void)
         // disarmed - disable ground effect and return
         gndeffect_state.takeoff_expected = false;
         gndeffect_state.touchdown_expected = false;
-        ahrs.set_takeoff_expected(gndeffect_state.takeoff_expected);
-        ahrs.set_touchdown_expected(gndeffect_state.touchdown_expected);
+		AP::ahrs().set_takeoff_expected(gndeffect_state.takeoff_expected);
+		AP::ahrs().set_touchdown_expected(gndeffect_state.touchdown_expected);
         return;
     }
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <GCS_MAVLink/GCS.h>
-
+#if HAL_GCS_ENABLED
 class GCS_MAVLINK_Tracker : public GCS_MAVLINK
 {
 
@@ -52,3 +52,5 @@ private:
 
     bool waypoint_receiving;
 };
+
+#endif 

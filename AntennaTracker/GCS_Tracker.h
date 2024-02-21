@@ -3,6 +3,7 @@
 #include <GCS_MAVLink/GCS.h>
 #include "GCS_Mavlink.h"
 
+#if HAL_GCS_ENABLED
 class GCS_Tracker : public GCS
 {
     friend class Tracker; // for access to _chan in parameter declarations
@@ -37,3 +38,4 @@ private:
     void request_datastream_airpressure(uint8_t sysid, uint8_t compid);
 
 };
+#endif 

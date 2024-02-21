@@ -243,10 +243,12 @@ protected:
     AP_AHRS &ahrs;
     AC_AttitudeControl *&attitude_control;
     MOTOR_CLASS *&motors;
+#if AP_RC_CHANNEL_ENABLED
     RC_Channel *&channel_roll;
     RC_Channel *&channel_pitch;
     RC_Channel *&channel_throttle;
     RC_Channel *&channel_yaw;
+#endif 
     float &G_Dt;
 
     // note that we support two entirely different automatic takeoffs:
@@ -553,8 +555,10 @@ public:
         FUNCTOR_BIND_MEMBER(&ModeAuto::verify_command, bool, const AP_Mission::Mission_Command &),
         FUNCTOR_BIND_MEMBER(&ModeAuto::exit_mission, void)};
 
+#if AP_MISSION_ENABLED
     // Mission change detector
     AP_Mission_ChangeDetector mis_change_detector;
+#endif 
 
     // true if weathervaning is allowed in auto
 #if WEATHERVANE_ENABLED == ENABLED

@@ -239,7 +239,9 @@ const AP_Param::GroupInfo AP_Baro::var_info[] = {
     // @Increment: 1
     // @Range: 0 5000
     // @User: Advanced
+#ifndef HAL_BUILD_AP_PERIPH
     AP_GROUPINFO("_ALTERR_MAX", 23, AP_Baro, _alt_error_max, 2000),
+#endif 
 
     // @Param: _OPTIONS
     // @DisplayName: Barometer options
@@ -1126,6 +1128,7 @@ bool AP_Baro::arming_checks(size_t buflen, char *buffer) const
       baro alt this catches bad barometers, such as when a MS5607 has
       been substituted for a MS5611
      */
+#ifndef HAL_BUILD_AP_PERIPH
     const auto &gps = AP::gps();
     if (_alt_error_max > 0 && gps.status() >= AP_GPS::GPS_Status::GPS_OK_FIX_3D) {
         const float alt_amsl = gps.location().alt*0.01;
@@ -1137,6 +1140,7 @@ bool AP_Baro::arming_checks(size_t buflen, char *buffer) const
             return false;
         }
     }
+#endif 
 #endif
     return true;
 }

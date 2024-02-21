@@ -1713,7 +1713,9 @@ void AP_OSD_Screen::draw_rrpm(uint8_t x, uint8_t y)
 
 void AP_OSD_Screen::draw_throttle(uint8_t x, uint8_t y)
 {
+#if HAL_GCS_ENABLED
     backend->write(x, y, false, "%3d%c", gcs().get_hud_throttle(), SYMBOL(SYM_PCNT));
+#endif 
 }
 
 #if HAL_OSD_SIDEBAR_ENABLE
@@ -1833,10 +1835,12 @@ void AP_OSD_Screen::draw_wind(uint8_t x, uint8_t y)
     draw_speed(x + 1, y, angle, length);
 
 #else
+#if AP_WINDVANE_ENABLED
     const AP_WindVane* windvane = AP_WindVane::get_singleton();
     if (windvane != nullptr) {
         draw_speed(x + 1, y, windvane->get_apparent_wind_direction_rad() + M_PI, windvane->get_apparent_wind_speed());
     }
+#endif 
 #endif
 
     backend->write(x, y, false, "%c", SYMBOL(SYM_WSPD));

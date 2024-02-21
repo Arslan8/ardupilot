@@ -223,39 +223,41 @@ const AP_Param::Info Tracker::var_info[] = {
 
     // @Group: SR0_
     // @Path: GCS_Mavlink.cpp
+#if HAL_GCS_ENABLED
     GOBJECTN(_gcs.chan_parameters[0], gcs0,        "SR0_",     GCS_MAVLINK_Parameters),
+#endif 
 
-#if MAVLINK_COMM_NUM_BUFFERS >= 2
+#if MAVLINK_COMM_NUM_BUFFERS >= 2 && HAL_GCS_ENABLED
     // @Group: SR1_
     // @Path: GCS_Mavlink.cpp
     GOBJECTN(_gcs.chan_parameters[1],  gcs1,       "SR1_",     GCS_MAVLINK_Parameters),
 #endif
 
-#if MAVLINK_COMM_NUM_BUFFERS >= 3
+#if MAVLINK_COMM_NUM_BUFFERS >= 3 && HAL_GCS_ENABLED
     // @Group: SR2_
     // @Path: GCS_Mavlink.cpp
     GOBJECTN(_gcs.chan_parameters[2],  gcs2,       "SR2_",     GCS_MAVLINK_Parameters),
 #endif
 
-#if MAVLINK_COMM_NUM_BUFFERS >= 4
+#if MAVLINK_COMM_NUM_BUFFERS >= 4 && HAL_GCS_ENABLED
     // @Group: SR3_
     // @Path: GCS_Mavlink.cpp
     GOBJECTN(_gcs.chan_parameters[3],  gcs3,       "SR3_",     GCS_MAVLINK_Parameters),
 #endif
 
-#if MAVLINK_COMM_NUM_BUFFERS >= 5
+#if MAVLINK_COMM_NUM_BUFFERS >= 5 && HAL_GCS_ENABLED
     // @Group: SR4_
     // @Path: GCS_Mavlink.cpp
     GOBJECTN(_gcs.chan_parameters[4],  gcs4,       "SR4_",     GCS_MAVLINK_Parameters),
 #endif
 
-#if MAVLINK_COMM_NUM_BUFFERS >= 6
+#if MAVLINK_COMM_NUM_BUFFERS >= 6 && HAL_GCS_ENABLED
     // @Group: SR5_
     // @Path: GCS_Mavlink.cpp
     GOBJECTN(_gcs.chan_parameters[5],  gcs5,       "SR5_",     GCS_MAVLINK_Parameters),
 #endif
 
-#if MAVLINK_COMM_NUM_BUFFERS >= 7
+#if MAVLINK_COMM_NUM_BUFFERS >= 7 && HAL_GCS_ENABLED
     // @Group: SR6_
     // @Path: GCS_Mavlink.cpp
     GOBJECTN(_gcs.chan_parameters[6],  gcs6,       "SR6_",     GCS_MAVLINK_Parameters),
@@ -268,13 +270,17 @@ const AP_Param::Info Tracker::var_info[] = {
     // @User: Standard
     GSCALAR(log_bitmask, "LOG_BITMASK", DEFAULT_LOG_BITMASK),
 
+#if AP_INERTIALSENSOR_ENABLED
     // @Group: INS
     // @Path: ../libraries/AP_InertialSensor/AP_InertialSensor.cpp
     GOBJECT(ins,                    "INS", AP_InertialSensor),
+#endif 
 
     // @Group: AHRS_
     // @Path: ../libraries/AP_AHRS/AP_AHRS.cpp
-    GOBJECT(ahrs,                   "AHRS_",    AP_AHRS),
+#if AP_AHRS_ENABLED
+    GOBJECT(AP::ahrs(),                   "AHRS_",    AP_AHRS),
+#endif 
 
 #if AP_SIM_ENABLED
     // @Group: SIM_

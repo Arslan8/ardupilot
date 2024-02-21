@@ -54,16 +54,24 @@ const AP_Scheduler::Task Tracker::scheduler_tasks[] = {
     SCHED_TASK(update_GPS,             10,    4000, 20),
     SCHED_TASK(update_compass,         10,    1500, 25),
     SCHED_TASK(compass_save,            0.02,  200, 30),
+#if AP_BATTERY_ENABLED
     SCHED_TASK_CLASS(AP_BattMonitor,    &tracker.battery,   read,           10, 1500, 35),
+#endif 
     SCHED_TASK_CLASS(AP_Baro,          &tracker.barometer,  update,         10, 1500, 40),
+#if HAL_GCS_ENABLED
     SCHED_TASK_CLASS(GCS,              (GCS*)&tracker._gcs, update_receive, 50, 1700, 45),
     SCHED_TASK_CLASS(GCS,              (GCS*)&tracker._gcs, update_send,    50, 3000, 50),
+#endif 
     SCHED_TASK_CLASS(AP_Baro,           &tracker.barometer, accumulate,     50,  900, 55),
 #if HAL_LOGGING_ENABLED
     SCHED_TASK(ten_hz_logging_loop,    10,    300, 60),
     SCHED_TASK_CLASS(AP_Logger,   &tracker.logger, periodic_tasks, 50,  300, 65),
 #endif
+
+#if 0
+	//fatal error: no member named 'ins' in 'Tracker'
     SCHED_TASK_CLASS(AP_InertialSensor, &tracker.ins,       periodic,       50,   50, 70),
+#endif 
     SCHED_TASK(one_second_loop,         1,   3900, 80),
     SCHED_TASK(stats_update,            1,    200, 90),
 };
@@ -88,10 +96,10 @@ void Tracker::one_second_loop()
     // updated armed/disarmed status LEDs
     update_armed_disarmed();
 
-    if (!ahrs.home_is_set()) {
+    if (!AP::ahrs().home_is_set()) {
         // set home to current location
         Location temp_loc;
-        if (ahrs.get_location(temp_loc)) {
+        if (AP::ahrs().get_location(temp_loc)) {
             if (!set_home(temp_loc)){
                 // fail silently
             }

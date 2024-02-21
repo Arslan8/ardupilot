@@ -6,6 +6,7 @@
 #include "quadplane.h"
 #include "defines.h"
 
+#if HAL_GCS_ENABLED
 class GCS_MAVLINK_Plane : public GCS_MAVLINK
 {
 
@@ -108,3 +109,4 @@ private:
     MAV_LANDED_STATE landed_state() const override;
 
 };
+#endif 

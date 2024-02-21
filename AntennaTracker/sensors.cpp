@@ -5,7 +5,7 @@
  */
 void Tracker::update_ahrs()
 {
-    ahrs.update();
+	update_ahrs();
 }
 
 /*

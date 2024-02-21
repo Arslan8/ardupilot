@@ -17,7 +17,7 @@
 
 #include "AP_PiccoloCAN_ESC.h"
 
-#if HAL_PICCOLO_CAN_ENABLE
+#if HAL_PICCOLO_CAN_ENABLE==2
 
 /*
  * Decode a recevied CAN frame.

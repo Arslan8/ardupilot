@@ -163,6 +163,7 @@
   #error AC_Avoidance relies on AP_FENCE_ENABLED which is disabled
 #endif
 
+#define AC_OAPATHPLANNER_ENABLED DISABLED
 #if AC_OAPATHPLANNER_ENABLED && !AP_FENCE_ENABLED
   #error AP_OAPathPlanner relies on AP_FENCE_ENABLED which is disabled
 #endif
@@ -350,8 +351,10 @@ private:
     uint32_t takeoff_check_warning_ms;  // system time user was last warned of takeoff check failure
 
     // GCS selection
+#if HAL_GCS_ENABLED
     GCS_Copter _gcs; // avoid using this; use gcs()
     GCS_Copter &gcs() { return _gcs; }
+#endif 
 
     // User variables
 #ifdef USERHOOK_VARIABLES
@@ -424,7 +427,11 @@ private:
     } failsafe;
 
     bool any_failsafe_triggered() const {
-        return failsafe.radio || battery.has_failsafed() || failsafe.gcs || failsafe.ekf || failsafe.terrain || failsafe.adsb || failsafe.deadreckon;
+        return failsafe.radio || 
+#if AP_BATTERY_ENABLED
+				battery.has_failsafed() ||
+#endif
+				failsafe.gcs || failsafe.ekf || failsafe.terrain || failsafe.adsb || failsafe.deadreckon;
     }
 
     // dead reckoning state
@@ -459,10 +466,12 @@ private:
     // Stores initial bearing when armed - initial simple bearing is modified in super simple mode so not suitable
     int32_t initial_armed_bearing;
 
+#if AP_BATTERY_ENABLED
     // Battery Sensors
     AP_BattMonitor battery{MASK_LOG_CURRENT,
                            FUNCTOR_BIND_MEMBER(&Copter::handle_battery_failsafe, void, const char*, const int8_t),
                            _failsafe_priorities};
+#endif 
 
 #if OSD_ENABLED || OSD_PARAM_ENABLED
     AP_OSD osd;
@@ -671,7 +680,7 @@ private:
     // Copter.cpp
     void get_scheduler_tasks(const AP_Scheduler::Task *&tasks,
                              uint8_t &task_count,
-                             uint32_t &log_bit) override;
+                             uint32_t &log_bit);
 #if AP_SCRIPTING_ENABLED
 #if MODE_GUIDED_ENABLED == ENABLED
     bool start_takeoff(float alt) override;
@@ -973,9 +982,11 @@ private:
     void userhook_MediumLoop();
     void userhook_SlowLoop();
     void userhook_SuperSlowLoop();
+#if AP_RC_CHANNEL_ENABLED
     void userhook_auxSwitch1(const RC_Channel::AuxSwitchPos ch_flag);
     void userhook_auxSwitch2(const RC_Channel::AuxSwitchPos ch_flag);
     void userhook_auxSwitch3(const RC_Channel::AuxSwitchPos ch_flag);
+#endif
 
 #if MODE_ACRO_ENABLED == ENABLED
 #if FRAME_CONFIG == HELI_FRAME

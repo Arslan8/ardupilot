@@ -5,6 +5,7 @@
 #include <AP_Mission/AP_Mission_config.h>
 
 #ifndef HAL_GCS_ENABLED
+qlwkenlqkwne
 #define HAL_GCS_ENABLED 1
 #endif
 

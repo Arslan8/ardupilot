@@ -4,7 +4,7 @@
 void Copter::update_home_from_EKF()
 {
     // exit immediately if home already set
-    if (ahrs.home_is_set()) {
+    if (AP::ahrs().home_is_set()) {
         return;
     }
 

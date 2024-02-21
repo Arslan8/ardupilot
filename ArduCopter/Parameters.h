@@ -554,8 +554,10 @@ public:
     // frame class
     AP_Int8 frame_class;
 
+#if AP_RC_CHANNEL_ENABLED
     // RC input channels
     RC_Channels_Copter rc_channels;
+#endif 
     
     // control over servo output ranges
     SRV_Channels servo_channels;

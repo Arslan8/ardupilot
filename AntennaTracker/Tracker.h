@@ -75,7 +75,9 @@ private:
     /**
        antenna control channels
     */
+#if AP_RC_CHANNEL_ENABLED
     RC_Channels_Tracker rc_channels;
+#endif 
     SRV_Channels servo_channels;
 
     LowPassFilterFloat yaw_servo_out_filt;
@@ -83,14 +85,18 @@ private:
 
     bool yaw_servo_out_filt_init = false;
     bool pitch_servo_out_filt_init = false;
-
+#if HAL_GCS_ENABLED
     GCS_Tracker _gcs; // avoid using this; use gcs()
     GCS_Tracker &gcs() { return _gcs; }
+#endif 
 
+#if AP_BATTERY_ENABLED
     // Battery Sensors
     AP_BattMonitor battery{MASK_LOG_CURRENT,
                            FUNCTOR_BIND_MEMBER(&Tracker::handle_battery_failsafe, void, const char*, const int8_t),
                            nullptr};
+#endif 
+
     Location current_loc;
 
     Mode *mode_from_mode_num(enum Mode::Number num);
@@ -146,7 +152,7 @@ private:
     // Tracker.cpp
     void get_scheduler_tasks(const AP_Scheduler::Task *&tasks,
                              uint8_t &task_count,
-                             uint32_t &log_bit) override;
+                             uint32_t &log_bit);
     void one_second_loop();
     void ten_hz_logging_loop();
     void stats_update();

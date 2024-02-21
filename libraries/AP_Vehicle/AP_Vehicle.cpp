@@ -569,7 +569,9 @@ const AP_Scheduler::Task AP_Vehicle::scheduler_tasks[] = {
     SCHED_TASK_CLASS(AP_GyroFFT,   &vehicle.gyro_fft,       update,                  400, 50, 205),
     SCHED_TASK_CLASS(AP_GyroFFT,   &vehicle.gyro_fft,       update_parameters,         1, 50, 210),
 #endif
+#if AP_INERTIALSENSOR_ENABLED
     SCHED_TASK(update_dynamic_notch_at_specified_rate,      LOOP_RATE,                    200, 215),
+#endif 
 #if AP_VIDEOTX_ENABLED
     SCHED_TASK_CLASS(AP_VideoTX,   &vehicle.vtx,            update,                    2, 100, 220),
 #endif
@@ -716,6 +718,7 @@ bool AP_Vehicle::is_crashed() const
 #endif
 }
 
+#if AP_INERTIALSENSOR_ENABLED
 // update the harmonic notch filter for throttle based notch
 void AP_Vehicle::update_throttle_notch(AP_InertialSensor::HarmonicNotch &notch)
 {
@@ -856,7 +859,7 @@ void AP_Vehicle::update_dynamic_notch_at_specified_rate()
         }
     }
 }
-
+#endif 
 void AP_Vehicle::notify_no_such_mode(uint8_t mode_number)
 {
     GCS_SEND_TEXT(MAV_SEVERITY_WARNING,"No such mode %u", mode_number);

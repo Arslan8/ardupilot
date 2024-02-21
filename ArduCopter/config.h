@@ -558,13 +558,14 @@
 //
 
 #ifndef AC_AVOID_ENABLED
- #define AC_AVOID_ENABLED   ENABLED
+ #define AC_AVOID_ENABLED   DISABLED
 #endif
 
 #ifndef AC_OAPATHPLANNER_ENABLED
  #define AC_OAPATHPLANNER_ENABLED   ENABLED
 #endif
 
+#define MODE_FOLLOW_ENABLED DISABLED
 #if MODE_FOLLOW_ENABLED && !AC_AVOID_ENABLED
   #error Follow Mode relies on AC_AVOID which is disabled
 #endif

@@ -17,7 +17,7 @@
 #include <AP_HAL/AP_HAL.h>
 
 #ifndef AP_LTM_TELEM_ENABLED
-#define AP_LTM_TELEM_ENABLED 1
+#define AP_LTM_TELEM_ENABLED 0
 #endif
 
 #if AP_LTM_TELEM_ENABLED

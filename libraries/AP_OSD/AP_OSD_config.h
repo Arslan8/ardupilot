@@ -12,7 +12,7 @@
 #endif
 
 #ifndef OSD_PARAM_ENABLED
-#define OSD_PARAM_ENABLED 1
+#define OSD_PARAM_ENABLED 0
 #endif
 
 #ifndef HAL_OSD_SIDEBAR_ENABLE

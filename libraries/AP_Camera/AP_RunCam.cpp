@@ -30,6 +30,7 @@
 #include <GCS_MAVLink/GCS.h>
 #include <AP_Logger/AP_Logger.h>
 #include <AP_SerialManager/AP_SerialManager.h>
+#include <RC_Channel/RC_Channel.h>
 
 const AP_Param::GroupInfo AP_RunCam::var_info[] = {
     // @Param: TYPE
@@ -448,6 +449,7 @@ void AP_RunCam::handle_in_menu(Event ev)
     }
 }
 
+#if AP_RC_CHANNEL_ENABLED
 // map rc input to an event
 AP_RunCam::Event AP_RunCam::map_rc_input_to_event() const
 {
@@ -515,6 +517,7 @@ AP_RunCam::Event AP_RunCam::map_rc_input_to_event() const
     }
     return result;
 }
+#endif 
 
 // run the 2-key OSD simulation process, this involves using the power and mode (wifi) buttons
 // to cycle through options. unfortunately these are one-way requests so we need to use delays

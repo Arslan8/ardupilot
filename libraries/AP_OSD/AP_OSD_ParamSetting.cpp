@@ -26,6 +26,7 @@
 #include <GCS_MAVLink/GCS.h>
 #include <SRV_Channel/SRV_Channel.h>
 #include <ctype.h>
+#include <AP_SerialManager/AP_SerialManager.h>
 
 #if OSD_PARAM_ENABLED
 

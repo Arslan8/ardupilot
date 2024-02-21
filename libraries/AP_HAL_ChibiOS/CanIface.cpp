@@ -88,7 +88,7 @@ extern const AP_HAL::HAL& hal;
 
 using namespace ChibiOS;
 
-constexpr bxcan::CanType* const CANIface::Can[];
+//bxcan::CanType* const CANIface::Can[];
 static ChibiOS::CANIface* can_ifaces[HAL_NUM_CAN_IFACES];
 
 uint8_t CANIface::next_interface;

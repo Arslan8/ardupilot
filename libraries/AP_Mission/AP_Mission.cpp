@@ -836,7 +836,6 @@ bool AP_Mission::read_cmd_from_storage(uint16_t index, Mission_Command& cmd) con
     return true;
 }
 
-#endif  // AP_MISSION_ENABLED
 
 bool AP_Mission::stored_in_location(uint16_t id)
 {
@@ -863,6 +862,7 @@ bool AP_Mission::stored_in_location(uint16_t id)
         return false;
     }
 }
+#endif // AP_MISSION_ENABLED
 
 #if AP_MISSION_ENABLED
 
@@ -938,8 +938,6 @@ void AP_Mission::write_home_to_storage()
     home_cmd.content.location = AP::ahrs().get_home();
     write_cmd_to_storage(0,home_cmd);
 }
-
-#endif  // AP_MISSION_ENABLED
 
 MAV_MISSION_RESULT AP_Mission::sanity_check_params(const mavlink_mission_item_int_t& packet)
 {
@@ -2934,5 +2932,5 @@ AP_Mission *mission()
 }
 
 }
-
+#endif  // AP_MISSION_ENABLED
 #endif  // AP_MISSION_ENABLED
